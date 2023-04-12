@@ -1,0 +1,24 @@
+{
+	"name": "Minikube",
+	"build": {
+		"dockerfile": "Containerfile"
+	},
+	"features": {
+		"ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {},
+		"ghcr.io/devcontainers/features/docker-in-docker:2": {
+			"moby": true,
+			"installDockerBuildx": true,
+			"version": "latest",
+			"dockerDashComposeVersion": "v2"
+		}
+	},
+	"hostRequirements": {
+		"memory": "8gb" // Minikube in a (remote) Dev Container requires a lot of memory
+	},
+	"mounts": [
+		"source=${localEnv:HOME}${localEnv:USERPROFILE}/.local/share/mkcert,target=/home/vscode/.local/share/mkcert,type=bind,consistency=cached" // keep user in sync with the one below (remoteUser/containerUser)
+	],
+	"postStartCommand": "/usr/local/bin/start-minikube.sh",
+	"remoteUser": "vscode",
+	"containerUser": "vscode"
+}

@@ -1,0 +1,12 @@
+FROM mcr.microsoft.com/devcontainers/base:bullseye
+
+# mkcert
+RUN curl -JLO "https://dl.filippo.io/mkcert/latest?for=linux/amd64" && \
+    chmod +x mkcert-v*-linux-amd64 && \
+    sudo cp mkcert-v*-linux-amd64 /usr/local/bin/mkcert
+RUN mkdir -p /home/vscode/.local/share/mkcert && chown -R vscode:vscode /home/vscode/.local
+
+COPY ./init-minikube.sh /usr/local/bin/init-minikube.sh
+RUN chmod 755 /usr/local/bin/init-minikube.sh
+COPY ./start-minikube.sh /usr/local/bin/start-minikube.sh
+RUN chmod 755 /usr/local/bin/start-minikube.sh
